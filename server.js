@@ -41,7 +41,9 @@ server.use("/api/checkAuth/", (req, res, next) => {
   try {
     const token = req.cookies.token;
 
+
     if (!token) {
+      res.send("<h1>keinToken!!</h1>")
       return res.json(false);
     }
 
