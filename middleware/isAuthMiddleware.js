@@ -20,6 +20,6 @@ export const isAuth = (req, res, next) => {
     next();
   } catch (err) {
     console.log(err);
-    return res.status(401).json("Unauthorized");
+    return res.status(401).json("Nix gut");
   }
 };
