@@ -1,0 +1,4 @@
+name: indigowebbackend
+buildCommand: npm install
+startCommand: npm start
+root: server
