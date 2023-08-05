@@ -19,10 +19,9 @@ import fragenRoutes from "./Routes/fragen.js";
 import neuigkeitenRoutes from "./Routes/neuigkeiten.js";
 import vorschlaege from "./Routes/vorschlaege.js";
 
-const PORT = process.env.PORT || 80;
+const PORT = 8080 || 80;
 const server = express();
-const CONECTION = process.env.MONGOCONECT;
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = "setToken";
 
 server.use(
   cors({
@@ -82,7 +81,7 @@ server.get("/api/image/:filename", async (req, res) => {
 });
 
 mongoose
-  .connect(CONECTION, { useNewUrlParser: true })
+  .connect("mongodb+srv://indigoweb:4aklI8amuXSMuU0O@cluster0.nusrge0.mongodb.net/indigoweb?retryWrites=true&w=majority", { useNewUrlParser: true })
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server Listen Port: ${PORT}`);
