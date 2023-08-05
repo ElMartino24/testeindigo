@@ -40,10 +40,9 @@ server.use("/api/checkAuth/", (req, res, next) => {
 
   try {
     const token = req.cookies.token;
-
+    
 
     if (!token) {
-      res.send("<h1>keinToken!!</h1>")
       return res.json(false);
     }
 
@@ -68,10 +67,31 @@ server.use("/api/fragen/", fragenRoutes);
 server.use("/api/neuigkeiten/", neuigkeitenRoutes);
 server.use("/api/vorschlaege/", vorschlaege);
 server.get("/api/hello", (req, res) => {
-  res.status(200).json({ message: "ich möchte kekse" });
+  res.status(200).json({ message: "Du hast den Jackpot gewonnen! Computer sagt nein" });
 });
 
 server.use("/img", express.static(path.join(__dirname, "img")));
+
+server.use("/api/login", (req, res, next) => {
+  if (req.headers.origin === "https://indigodev.de") {
+    res.header("Access-Control-Allow-Origin", "https://indigodev.de");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+
+    const token = jwt.sign({ userId: "exampleId" }, JWT_SECRET);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.status(200).json({ message: "Cookie gesetzt" });
+  } else {
+    res.status(403).json({ message: "Nicht erlaubt" });
+  }
+});
 
 server.get("/api/image/:filename", async (req, res) => {
   try {
