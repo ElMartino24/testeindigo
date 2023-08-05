@@ -16,9 +16,10 @@ export const createAccount = async (req, res, next) => {
   }
 
   let hashedPassword;
-
+  console.log("test5")
   try {
     hashedPassword = await bcrypt.hash(password, 12);
+    console.log("test7")
   } catch (err) {
     res.status(500).json({
       message: "Account kann nicht gespeichert werden",
@@ -26,20 +27,20 @@ export const createAccount = async (req, res, next) => {
       isSuccess: false,
     });
   }
-
+  console.log("test6")
   const newUser = new UserModel({ username, email, password: hashedPassword });
 
   try {
     const user = await newUser.save();
-
+    console.log("test1")
     const id = user.id;
-
+    console.log("test2")
     let accessToken = jwt.sign({ userId: id }, process.env.JWT_SECRET);
-
+    console.log("test3")
     res.cookie("token", accessToken, {
       httpOnly: true,
     });
-
+    console.log("test4")
     res.status(201).json({
       message: "Account erfolgreich gespeichert",
       content: user.id,
