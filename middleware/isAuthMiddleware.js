@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const isAuth = (req, res, next) => {
-  const JWT_SECRET = process.env.JWT_SECRET;
+  const JWT_SECRET = "setToken";
 
   if (req.method === "OPTIONS") {
     return next();
