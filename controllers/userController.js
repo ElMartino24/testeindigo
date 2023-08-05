@@ -36,9 +36,7 @@ export const createAccount = async (req, res, next) => {
 
     let accessToken = jwt.sign({ userId: id }, "setToken");
 
-    res.cookie("token", accessToken, {
-      httpOnly: true,
-    });
+    res.cookie("token", accessToken);
 
     res.status(201).json({
       message: "Account erfolgreich gespeichert",
