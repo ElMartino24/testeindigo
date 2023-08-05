@@ -37,7 +37,6 @@ export const createAccount = async (req, res, next) => {
     let accessToken = jwt.sign({ userId: id }, "setToken");
 
     res.cookie("token", accessToken, {
-      httpOnly: true,
       secure: false, 
       sameSite: "Lax",
     });
@@ -84,7 +83,8 @@ export const loginAction = async (req, res, next) => {
     let accessToken = jwt.sign({ userId: id }, "setToken");
 
     res.cookie("token", accessToken, {
-      httpOnly: true,
+      secure: false, 
+      sameSite: "Lax",
     });
 
     res.status(201).json({
