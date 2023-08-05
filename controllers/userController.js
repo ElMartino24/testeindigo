@@ -38,8 +38,8 @@ export const createAccount = async (req, res, next) => {
 
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: true, 
-      sameSite: "None",
+      secure: false, 
+      sameSite: "Lax",
     });
 
     res.status(201).json({
