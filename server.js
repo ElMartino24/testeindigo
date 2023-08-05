@@ -66,7 +66,7 @@ server.use("/api/fragen/", fragenRoutes);
 server.use("/api/neuigkeiten/", neuigkeitenRoutes);
 server.use("/api/vorschlaege/", vorschlaege);
 server.get("/api/hello", (req, res) => {
-  res.status(200).json({ message: "Hallo Web" });
+  res.status(200).json({ message: "ich möchte kekse" });
 });
 
 server.use("/img", express.static(path.join(__dirname, "img")));
