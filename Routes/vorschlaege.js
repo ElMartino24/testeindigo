@@ -1,5 +1,5 @@
 import Router from "express";
-import {isAuth} from "../middleware/isAuthMiddleware.js";
+//import {isAuth} from "../middleware/isAuthMiddleware.js";
 import {createEntryPost, updateEntry, getEntry, deleteEntry } from "../controllers/vorschlaege.js";
 import {blogInput} from "../middleware/entryMiddleware.js";
 import {updateInput} from "../middleware/entryMiddleware.js";
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/createEntryPost", isAuth, upload.single('image'), blogInput, createEntryPost);
+router.post("/createEntryPost", upload.single('image'), blogInput, createEntryPost);
 
 
 router.get("", getEntry);
