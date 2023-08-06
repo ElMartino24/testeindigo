@@ -74,6 +74,7 @@ server.get("/api/hello", (req, res) => {
 server.use("/img", express.static(path.join(__dirname, "img")));
 
 server.use("/api/login", (req, res, next) => {
+  console.log(req.headers.origin)
   if (req.headers.origin === "https://indigodev.de" || req.headers.origin === "http://indigodev.de") {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
     res.header("Access-Control-Allow-Credentials", "true");
