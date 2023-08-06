@@ -35,7 +35,7 @@ export const createAccount = async (req, res, next) => {
 
     const id = user.id;
 
-    let accessToken = jwt.sign({ userId: id }, "setToken");
+    let accessToken = jwt.sign({ userId: id }, process.env.jwt);
 
     res.cookie("token", accessToken, {
       httpOnly: true,
@@ -83,7 +83,7 @@ export const loginAction = async (req, res, next) => {
 
     const id = user.id;
 
-    let accessToken = jwt.sign({ userId: id }, "setToken");
+    let accessToken = jwt.sign({ userId: id }, process.env.jwt);
 
     res.cookie("token", accessToken, {
       httpOnly: true,
