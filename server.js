@@ -19,7 +19,7 @@ import fragenRoutes from "./Routes/fragen.js";
 import neuigkeitenRoutes from "./Routes/neuigkeiten.js";
 import vorschlaege from "./Routes/vorschlaege.js";
 
-const PORT = 80;
+const PORT = 443;
 const server = express();
 const JWT_SECRET = process.env.jwt;
 console.log("zeile 25" + JWT_SECRET)
