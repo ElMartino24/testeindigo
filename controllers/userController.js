@@ -1,6 +1,7 @@
 import UserModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 export const createAccount = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -37,8 +38,9 @@ export const createAccount = async (req, res, next) => {
     let accessToken = jwt.sign({ userId: id }, "setToken");
 
     res.cookie("token", accessToken, {
-      secure: false, 
-      sameSite: "Lax",
+      httpOnly: true,
+      secure: true,  
+      sameSite: "None",
     });
 
     res.status(201).json({
@@ -57,6 +59,7 @@ export const createAccount = async (req, res, next) => {
 
 export const loginAction = async (req, res, next) => {
   try {
+    cookieParser()(req, res, () => {});
     const { username, password } = req.body;
 
     const user = await UserModel.findOne({ username });
@@ -83,9 +86,16 @@ export const loginAction = async (req, res, next) => {
     let accessToken = jwt.sign({ userId: id }, "setToken");
 
     res.cookie("token", accessToken, {
-      secure: false, 
-      sameSite: "Lax",
+      httpOnly: true,
+      secure: true,  
+      sameSite: "None",
     });
+
+    if (req.cookies.token) {
+      console.log("Token-Cookie wurde gesetzt:", req.cookies.token);
+    } else {
+      console.log("Token-Cookie wurde nicht gesetzt");
+    }
 
     res.status(201).json({
       message: "Erfolgreich eingellogged",
@@ -102,10 +112,7 @@ export const loginAction = async (req, res, next) => {
 };
 
 export const logoutAction = async (req, res, next) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
+  
 
-  res.json({ message: "cookie entfernt" });
+  console.log("test")
 };
