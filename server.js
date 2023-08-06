@@ -21,7 +21,7 @@ import vorschlaege from "./Routes/vorschlaege.js";
 
 const PORT = 8080 || 80;
 const server = express();
-const JWT_SECRET = "setToken";
+const JWT_SECRET = process.env.jwt;
 
 server.use(
   cors({
