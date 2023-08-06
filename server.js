@@ -22,7 +22,7 @@ import vorschlaege from "./Routes/vorschlaege.js";
 const PORT = 8080 || 80;
 const server = express();
 const JWT_SECRET = process.env.jwt;
-
+console.log("zeile 25" + JWT_SECRET)
 server.use(
   cors({
     origin: "https://indigodev.de",
@@ -34,6 +34,7 @@ server.use(express.json());
 server.use(cookieParser());
 
 server.use("/api/checkAuth/", (req, res, next) => {
+
   if (req.method === "OPTIONS") {
     return next();
   }
@@ -73,14 +74,14 @@ server.get("/api/hello", (req, res) => {
 server.use("/img", express.static(path.join(__dirname, "img")));
 
 server.use("/api/login", (req, res, next) => {
-  if (req.headers.origin === "https://indigodev.de" || req.headers.origin === "http://deine-http-domain.de") {
+  if (req.headers.origin === "https://indigodev.de" || req.headers.origin === "http://indigodev.de") {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type");
 
     const token = jwt.sign({ userId: "exampleId" }, JWT_SECRET);
-
+    console.log("token zeile 84: " + token)
     const cookieOptions = {
       httpOnly: true,
       secure: req.headers.origin === "https://indigodev.de", 
@@ -91,8 +92,10 @@ server.use("/api/login", (req, res, next) => {
     res.cookie("token", token, cookieOptions);
 
     res.status(200).json({ message: "Cookie gesetzt" });
+    console.log("cookiesgesetzt")
   } else {
     res.status(403).json({ message: "Nicht erlaubt" });
+    console.log("cookies nicht gesetzt")
   }
 });
 
