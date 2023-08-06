@@ -73,20 +73,22 @@ server.get("/api/hello", (req, res) => {
 server.use("/img", express.static(path.join(__dirname, "img")));
 
 server.use("/api/login", (req, res, next) => {
-  if (req.headers.origin === "https://indigodev.de") {
-    res.header("Access-Control-Allow-Origin", "https://indigodev.de");
+  if (req.headers.origin === "https://indigodev.de" || req.headers.origin === "http://deine-http-domain.de") {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type");
 
     const token = jwt.sign({ userId: "exampleId" }, JWT_SECRET);
 
-    res.cookie("token", token, {
+    const cookieOptions = {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: req.headers.origin === "https://indigodev.de", 
+      sameSite: req.headers.origin === "https://indigodev.de" ? "none" : "Lax", 
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    });
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.status(200).json({ message: "Cookie gesetzt" });
   } else {
